@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
         printf("To edit please pass like : ./a.out -e (-t/ -a/ -A/ -m/ -y/ -c) changing_text mp3filename\n");
         printf("To get help pass like : ./a.out --help\n");
         printf("------------------------------------------------------------------------------------------\n");
+        return 1;
     }
     /* The help menu (Show detailed meaning of argument.)*/
     if (strcmp(argv[1], "--help") == 0)
@@ -27,6 +28,7 @@ int main(int argc, char *argv[])
         printf("    2.5] -c -> To edit content\n");
         printf("    2.6] -m -> To edit comment\n");
         printf("-------------------------------------------------\n");
+        return 1;
     }
 
     /* Check for to get correct position of file name from command line argument.*/
@@ -48,7 +50,7 @@ int main(int argc, char *argv[])
     {
         perror("Error : ");
         printf("File opening failed!\n");
-        return 1;
+        exit(1);
     }
     /* Check for ID3 tag.*/
     char TAG_ID[4];
@@ -60,9 +62,8 @@ int main(int argc, char *argv[])
         return 0;
     }
     /* Check for Version(03 00).*/
-    char version[3];
+    char version[2];
     fread(version, 1, 2, fptr);
-    version[2] = '\0';
     if (memcmp(version, "\x03\x00", 2) != 0)
     {
         printf("Error : Unsupported ID3 version, only ID3v2.3 and ID3v2.4 are supported.\n");
@@ -82,7 +83,7 @@ int main(int argc, char *argv[])
         Edit_Song_Details(argv[2], argv[3], argv[4]);
     }
     
-    printf("No of arguments(s) : %d\n", argc);
     fclose(fptr);
+    // printf("No of arguments(s) : %d\n", argc);
     return 0;
 }
