@@ -3,22 +3,22 @@
 /* Tags to check readed tag are correct or not*/
 const char *TAGS[] = {"TIT2", "TPE1", "TALB", "TYER", "TCON", "COMM"};
 const char *Lables[] = {"Title       :   ", "Artist      :   ", "Album       :   ", "Year        :   ", "Content     :   ", "Comment     :   "};
-const int TAGS_Count = 6;
-int i;
-int Temp_Count; /* For while loop termination.*/
-
+unsigned int Data_Size;
+unsigned char *Tag_Data;
 unsigned char header[10];
+
 void View_Song_Details(char *File_Name)
 {
     printf("|-------------------SELECTED VIEW DETAILS--------------------|\n");
     printf("|------------------------------------------------------------|\n");
     printf("            MP3 TAG READER AND EDITOR FOR ID3v2               \n");
     printf("|------------------------------------------------------------|\n");
-    while (Temp_Count != TAGS_Count)
+    int i = 0;
+    while (i != TAGS_Count) /* while loop terminate when i = 6.*/
     {
         fread(header, 1, 10, fptr);
-        unsigned int Data_Size = Convert_Size(header + 4);
-        unsigned char *Tag_Data = malloc(Data_Size + 1);
+        Data_Size = Convert_Size(header + 4);
+        Tag_Data = malloc(Data_Size + 1);
         if (!Tag_Data)
         {
             perror("malloc failed");
@@ -34,10 +34,8 @@ void View_Song_Details(char *File_Name)
             printf("\n");
             i++;
         }
-        Temp_Count++;
     }
     printf("|------------------------------------------------------------|\n");
-    
 }
 
 /* Function to convert 4-byte big-endian value from file into little-endian.*/
