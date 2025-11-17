@@ -8,26 +8,13 @@ int main(int argc, char *argv[])
     /* Error and usage message if argument is equal or less than one.*/
     if (argc <= 1)
     {
-        printf("------------------------------------------------------------------------------------------\n");
-        printf("ERROR : ./a.out : INVALID ARGUMENTS\n");
-        printf("To view please pass like : ./a.out -v mp3filename\n");
-        printf("To edit please pass like : ./a.out -e (-t/ -a/ -A/ -m/ -y/ -c) changing_text mp3filename\n");
-        printf("To get help pass like : ./a.out --help\n");
-        printf("------------------------------------------------------------------------------------------\n");
+        error_and_usage();
         return 1;
     }
     /* The help menu (Show detailed meaning of argument.)*/
     if (strcmp(argv[1], "--help") == 0)
     {
-        printf("--------------------HELP MENU--------------------\n");
-        printf("1. -v -> To view mp3 file contents\n2. -e -> To edit mp3 file contents\n");
-        printf("    2.1] -t -> To edit song title\n");
-        printf("    2.2] -a -> To edit artist name\n");
-        printf("    2.3] -A -> To edit album name\n");
-        printf("    2.4] -y -> To edit year\n");
-        printf("    2.5] -c -> To edit content\n");
-        printf("    2.6] -m -> To edit comment\n");
-        printf("-------------------------------------------------\n");
+        help_menu();
         return 1;
     }
 
@@ -37,7 +24,7 @@ int main(int argc, char *argv[])
     argv_num = 2;   /*If true -> Second index argument is file name.*/
     else
     argv_num = 4;   /*If false -> forth index argument is file name.*/
-    
+
     /* Check for '.mp3' extension.*/
     if (strstr(argv[argv_num], ".mp3") == NULL)
     {
@@ -75,15 +62,15 @@ int main(int argc, char *argv[])
     /* Check for first index whether it is for view or edit.*/
     if (strcmp(argv[1], "-v") == 0)
     {
-        View_Song_Details(argv[2]);
+        view_song_details(argv[2]);
     }
     
     if (strcmp(argv[1], "-e") == 0)
     {
-        Edit_Song_Details(argv[2], argv[3], argv[4]);
+        edit_song_details(argv[2], argv[3], argv[4]);
     }
     
     fclose(fptr);
-    // printf("No of arguments(s) : %d\n", argc);
+
     return 0;
 }
